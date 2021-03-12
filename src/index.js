@@ -1,4 +1,4 @@
-module.exports = function toReadable (number) {
+module.exports = function toReadable(number) {
     const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
     const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
     // case number < 0
@@ -9,22 +9,15 @@ module.exports = function toReadable (number) {
     if (number === 0) {
         return 'zero';
     }
-    let parsedNumber = ('0000' + number).substr(-4).match(/^(\d{1})(\d{1})(\d{2})$/);
+    let stringNum = String(number);
+    let parsedNumber = stringNum.padStart(4, 0).match(/^(\d{1})(\d{1})(\d{2})$/);
     let readableNumber = '';
-    if (parsedNumber[1] != 0) {
+    if (parsedNumber[1] !== '0') {
         readableNumber += ones[Number(parsedNumber[1])] + ' thousand '
-    } else {
-        readableNumber += '';
     }
-    if (parsedNumber[2] != 0) {
+    if (parsedNumber[2] !== '0') {
         readableNumber += ones[Number(parsedNumber[2])] + ' hundred ';
-    } else {
-        readableNumber += '';
     }
-    if (parsedNumber[3] != 0) {
-        readableNumber += (ones[Number(parsedNumber[3])] || tens[parsedNumber[3][0]] + ' ' + ones[parsedNumber[3][1]]);
-    } else {
-        readableNumber += '';
-    }
+    readableNumber += (ones[Number(parsedNumber[3])] || tens[parsedNumber[3][0]] + ' ' + ones[parsedNumber[3][1]]);
     return readableNumber.trim();
 }
